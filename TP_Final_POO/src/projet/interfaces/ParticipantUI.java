@@ -18,7 +18,6 @@ import projet.composants.*;
 import projet.mecanismes.ParticipantObserver;
 
 import java.io.File;
-import java.util.Objects;
 
 public class ParticipantUI {
 
@@ -133,9 +132,6 @@ public class ParticipantUI {
         back.setEffect(new DropShadow(10, Color.DEEPPINK));
         back.setFont(Font.font("Segeo UI", FontWeight.BOLD, 16));
 
-        int i = mainApplication.getGestionEvenement().getEvenements().indexOf(evenement);
-        int j = evenement.getOrganisateur().getEvenements().indexOf(evenement);
-
         if (organisateur) {
             title.setText("Inscrivez-vous en tant qu'Organisateur");
             grid.add(submit, 0, 4);
@@ -161,6 +157,8 @@ public class ParticipantUI {
                 grid.add(submit, 0, 5);
                 grid.add(result, 0, 6);
                 submit.setOnAction(e -> {
+                    int i = mainApplication.getGestionEvenement().getEvenements().indexOf(evenement);
+                    int j = evenement.getOrganisateur().getEvenements().indexOf(evenement);
                     String id = String.valueOf(evenement.getArtistes().size());
                     Artiste artiste1 = new Artiste(id, nom_.getText(), email_.getText());
                     artiste1.setType(type_.getText());
@@ -184,6 +182,8 @@ public class ParticipantUI {
                     grid.add(submit, 0, 5);
                     grid.add(result, 0, 6);
                     submit.setOnAction(e -> {
+                        int i = mainApplication.getGestionEvenement().getEvenements().indexOf(evenement);
+                        int j = evenement.getOrganisateur().getEvenements().indexOf(evenement);
                         String id = String.valueOf(evenement.getIntervenants().size());
                         Intervenant intervenant1 = new Intervenant(id, nom_.getText(), email_.getText());
                         intervenant1.setDomaine(domaine_.getText());
@@ -202,6 +202,8 @@ public class ParticipantUI {
                     grid.add(submit, 0, 4);
                     grid.add(result, 0, 5);
                     submit.setOnAction(e -> {
+                        int i = mainApplication.getGestionEvenement().getEvenements().indexOf(evenement);
+                        int j = evenement.getOrganisateur().getEvenements().indexOf(evenement);
                         String id = String.valueOf(evenement.getParticipants().size());
                         ParticipantObserver participant = new Participant(id, nom_.getText(), email_.getText());
                         evenement.ajouterParticipant(participant);

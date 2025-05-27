@@ -31,10 +31,10 @@ public class MainApplication extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (concerts!=null) {
+        if (concerts != null) {
             gestionEvenement.getEvenements().addAll(concerts);
         }
-        if (conferences!=null) {
+        if (conferences != null) {
             gestionEvenement.getEvenements().addAll(conferences);
         }
         List<Organisateur> organisateurs;
@@ -43,34 +43,30 @@ public class MainApplication extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (organisateurs!= null) {
+        if (organisateurs != null) {
             gestionEvenement.getOrganisateurs().addAll(organisateurs);
         }
         AccueilUI accueilUI = new AccueilUI(stage, this);
         accueilUI.initialiseUI();
+
+        //new Thread(this::conserver).start();
+
     }
 
-    /*@Override
-    public void stop() throws Exception {
+    public void conserver() throws Exception {
         File file;
         boolean result;
 
         file = new File("src/concert.json"); result = file.delete(); result = file.createNewFile();
         file = new File("src/conference.json"); result = file.delete(); result = file.createNewFile();
-        for (Evenement evenement : gestionEvenement.getEvenements()) {
-            if (evenement.getClass().getSimpleName().equals("Concert")) {
-                Serialiser.serialiserConcert(evenement, "src/concert.json");
-            } else {
-                Serialiser.serialiserConference(evenement, "src/conference.json");
-            }
-        }
+        Serialiser.serialiserEvenement(gestionEvenement.getEvenements(), "src/concert.json", "src/conference.json");
 
         file = new File("src/organisateur.json");
         result = file.delete();
         result = file.createNewFile();
         Serialiser.serialiserOrganisateur(gestionEvenement.getOrganisateurs(), "src/organisateur.json");
         super.stop();
-    }*/
+    }
 
     public ParticipantObserver loginParticipant(String id, Evenement evenement) {
         if (gestionEvenement.getEvenements().contains(evenement)) {

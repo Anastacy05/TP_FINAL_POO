@@ -3,6 +3,7 @@ package projet.interfaces;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -61,15 +62,47 @@ public class EvenementUI {
         );
         root.setBackground(new Background(background));
 
-        GridPane event = new GridPane();
-        event.setVgap(10);
-        event.setHgap(20);
+        VBox event = new VBox();
+        event.setSpacing(30);
+        event.setAlignment(Pos.CENTER);
         event.setMaxHeight(MIN_HEIGHT/2);
         event.setMinWidth(MIN_WIDTH);
         event.setStyle("-fx-background-color: hotpink");
         event.setEffect(new DropShadow(50, Color.MAGENTA));
 
         String[] details = evenement.afficherDetails().split("//");
+
+        Label title = new Label();
+        title.setTextFill(Color.DARKMAGENTA);
+        title.setEffect(new DropShadow(2, Color.DEEPPINK));
+        title.setFont(Font.font("Segoe UI", FontWeight.BOLD, 42));
+
+        Label infos = new Label();
+        infos.setTextFill(Color.PURPLE);
+        infos.setWrapText(true);
+        infos.setEffect(new DropShadow(2, Color.DEEPPINK));
+        infos.setFont(Font.font("Segoe UI", FontWeight.LIGHT, 20));
+
+        String nom = details[0];
+        String date = details[1];
+        String lieu = details[2];
+        String nbplacesdispo = details[4];
+
+        if (evenement.getClass().getSimpleName().equals("Concert")) {
+            String genre_musical = details[5];
+            String artiste = details[6].substring(1, details[6].length()-1);
+            String[] artistes = artiste.split(",");
+            title.setText("GRAND CONCERT EN APPROCHE");
+            infos.setText("Venez profiter de cette occasion unique au concert " + nom +" de " + genre_musical + "!\n Avec l'artiste " + artistes[0] + "\nCe sera le " + date + " nulle part ailleurs qu'à " + lieu + ". Il reste " + nbplacesdispo + " places disponibles. Vous n'êtes pas encore inscrit comme participant ? Dépêchez-vous !");
+        } else {
+            String theme = details[5];
+            String intervenant = details[6].substring(1, details[6].length()-1);
+            String[] intervenants = intervenant.split(",");
+            title.setText("GRANDE CONFERENCE EN APPROCHE");
+            infos.setText("Venez profiter de cette occasion unique à la conférence " + nom +" sur le thème " + theme + "!\n Avec l'intervenant " + intervenants[0] + "\nCe sera le " + date + " nulle part ailleurs qu'à " + lieu + ". Il reste " + nbplacesdispo + " places disponibles. Vous n'êtes pas encore inscrit comme participant ? Dépêchez-vous !");
+        }
+
+        event.getChildren().addAll(title, infos);
 
         HBox buttons = new HBox(20);
         buttons.setAlignment(Pos.CENTER);
